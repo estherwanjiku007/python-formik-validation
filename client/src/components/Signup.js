@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import * as yup from "yup";
+import *as yup from "yup";
 export const SignupForm = () => {
   const [customers, setCustomers] = useState([{}]);
   const [refreshPage, setRefreshPage] = useState(false);
@@ -17,18 +17,22 @@ export const SignupForm = () => {
       });
   }, [refreshPage]);
 
-  const formSchema = yup.object().shape({
-    email: yup.string().email("Invalid email").required("Must enter email"),
-    name: yup.string().required("Must enter a name").max(15),
-    age: yup
-      .number()
-      .positive()
-      .integer()
-      .required("Must enter age")
-      .typeError("Please enter an Integer")
-      .max(125),
-  });
-
+  // const formSchema = yup.object().shape({
+  //   email: yup.string().email("Invalid email").required("Must enter email"),
+  //   name: yup.string().required("Must enter a name").max(15),
+  //   age: yup
+  //     .number()
+  //     .positive()
+  //     .integer()
+  //     .required("Must enter age")
+  //     .typeError("Please enter an Integer")
+  //     .max(125),
+  // });
+const formSchema=yup.object().shape({
+  name:yup.string().required("Name is required"),
+  email:yup.string().required("Email is required").email("Invalid email").typeError("Email must be a string"),
+  age:yup.number().positive().integer().required("Enter an age").typeError("Age must be an integer").max(100)
+})
   const formik = useFormik({
     initialValues: {
       name: "",
